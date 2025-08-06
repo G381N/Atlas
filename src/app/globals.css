@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Poppins:wght@400;600&family=Caveat:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Poppins:wght@400;600&family=Caveat:wght@700&family=Orbitron:wght@700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -75,6 +75,9 @@
   }
   .font-quote {
     font-family: 'Caveat', cursive;
+  }
+   .font-futuristic {
+    font-family: 'Orbitron', sans-serif;
   }
 }
 
@@ -158,3 +161,24 @@
 .sparkle-button:hover:before {
   left: 100%;
 }
+
+
+/* Neon Glow Effect */
+.neon-glow-button {
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0), 0 0 10px rgba(0, 191, 255, 0);
+}
+
+.neon-glow-button:hover {
+    color: #fff;
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0.8), 0 0 15px rgba(0, 191, 255, 0.6), 0 0 25px rgba(0, 191, 255, 0.4);
+}
+
+.neon-glow-icon {
+     transition: all 0.2s ease-in-out;
+}
+
+.neon-glow-icon:hover {
+    filter: drop-shadow(0 0 3px rgba(0, 191, 255, 0.8)) drop-shadow(0 0 8px rgba(0, 191, 255, 0.6));
+}
+

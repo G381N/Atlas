@@ -33,22 +33,28 @@ export default function Header() {
   }
 
   const isLandingPage = pathname === "/";
+  const headerClasses = `fixed top-0 z-50 w-full transition-all duration-300 ${
+    isLandingPage 
+      ? 'bg-black/20 backdrop-blur-sm border-b border-white/10' 
+      : 'bg-background/95 backdrop-blur-sm border-b'
+  }`;
+
 
   return (
-    <header className={`fixed top-0 z-50 w-full border-b border-border/40 ${isLandingPage ? 'bg-transparent' : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
+    <header className={headerClasses}>
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
-          <span className={`font-bold text-lg font-title ${isLandingPage ? 'text-white' : 'text-foreground'}`}>ATLAS</span>
+          <span className={`text-2xl font-bold font-futuristic tracking-wider ${isLandingPage ? 'text-white' : 'text-foreground'}`}>ATLAS</span>
         </Link>
         
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 md:space-x-4">
           <ThemeToggle />
           {loading ? (
             <div className="h-10 w-10 rounded-full bg-muted animate-pulse" />
           ) : user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full border-2 border-primary">
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full border-2 border-primary neon-glow-icon">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={user.photoURL || "https://placehold.co/40x40"} alt={user.displayName || 'User'} data-ai-hint="user avatar" />
                     <AvatarFallback>{user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}</AvatarFallback>
@@ -85,7 +91,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-             <Button asChild className={`${isLandingPage ? 'border-white text-white hover:bg-white/20' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
+             <Button asChild variant="outline" className="border-cyan-400 text-cyan-400 bg-transparent hover:bg-cyan-400/20 hover:text-white neon-glow-button rounded-full">
                 <Link href="/auth">
                     <LogIn className="mr-2 h-4 w-4" />
                     Login

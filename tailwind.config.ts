@@ -14,6 +14,7 @@ export default {
         body: ['var(--font-poppins)'],
         title: ['var(--font-baloo)'],
         quote: ['var(--font-caveat)'],
+        futuristic: ['var(--font-orbitron)'],
       },
       colors: {
         background: 'hsl(var(--background))',
