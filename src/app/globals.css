@@ -78,6 +78,14 @@
   }
 }
 
+/* New Hero Background Style */
+.hero-background {
+  background-image: url('https://storage.googleapis.com/project-game-assets/night.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* Animations for Hero Section */
 
 /* Stars */

@@ -1,23 +1,14 @@
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Home() {
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <Image
-          src="https://storage.googleapis.com/project-game-assets/night.png"
-          alt="Night World Map"
-          layout="fill"
-          objectFit="cover"
-          className="z-0"
-          priority
-        />
+      <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden hero-background">
+        {/* Background is now handled by CSS */}
         <div className="absolute inset-0 bg-black/50 z-0"></div>
-
 
         {/* Animations */}
         <div className="stars"></div>
