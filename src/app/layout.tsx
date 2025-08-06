@@ -1,6 +1,6 @@
 
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import { Baloo_2, Poppins, Caveat } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
@@ -9,12 +9,24 @@ import { AuthProvider } from '@/context/auth-provider';
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '700', '900'],
+  weight: ['400', '600'],
   variable: '--font-poppins',
 });
 
+const baloo = Baloo_2({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-baloo',
+});
+
+const caveat = Caveat({
+    subsets: ['latin'],
+    weight: ['700'],
+    variable: '--font-caveat',
+});
+
 export const metadata: Metadata = {
-  title: 'GeoGuess Master',
+  title: 'Where In The World?',
   description: 'A geography-based web game.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
@@ -26,16 +38,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
-      </head>
-      <body className={`${poppins.variable} font-headline antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      <body className={`${poppins.variable} ${baloo.variable} ${caveat.variable} font-body antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <AuthProvider>
             <Header />
-            <main className="relative z-10">{children}</main>
+            <main>{children}</main>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>
