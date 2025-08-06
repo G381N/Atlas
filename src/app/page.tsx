@@ -4,61 +4,72 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-blue-400 p-4">
+    <div className="flex h-screen w-full items-center justify-center bg-[#5CB9F2] p-4">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://storage.googleapis.com/project-game-assets/atlas_background.png"
+          src="/day.png"
           alt="World Map Background"
           layout="fill"
           objectFit="cover"
+          className="dark:hidden"
+        />
+        <Image
+          src="/night.png"
+          alt="World Map Background"
+          layout="fill"
+          objectFit="cover"
+          className="hidden dark:block"
         />
       </div>
       <div className="relative z-10 flex flex-col items-center space-y-6 text-center text-white">
         <h1
           className="text-8xl md:text-9xl font-bold tracking-tight text-white uppercase"
-          style={{ WebkitTextStroke: '4px #1E40AF' }}
+          style={{ WebkitTextStroke: '4px #1E3A8A' }}
         >
-          <span className="text-orange-500">A</span>
-          <span className="text-blue-600">T</span>
-          <span className="text-yellow-400">L</span>
-          <span className="text-orange-500">A</span>
-          <span className="text-green-500">S</span>
+          <span style={{ color: '#F56538' }}>A</span>
+          <span style={{ color: '#3B82F6' }}>T</span>
+          <span style={{ color: '#FBBF24' }}>L</span>
+          <span style={{ color: '#F56538' }}>A</span>
+          <span style={{ color: '#22C55E' }}>S</span>
         </h1>
 
-        <p className="mt-2 max-w-lg text-xl text-white font-semibold">
-          Name a place starting with the last letter of the previous one
+        <p className="mt-2 max-w-lg text-2xl text-white font-semibold px-4" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.2)'}}>
+          Name a place starting with the last
+          <br />
+          letter of the previous one
         </p>
 
         <div className="w-full max-w-sm space-y-4 pt-4">
           <Button
             asChild
             size="lg"
-            className="w-full text-lg font-bold !bg-primary hover:!bg-primary/90 h-16"
+            className="w-full text-xl font-bold h-16 bg-[#F56538] hover:bg-[#E15A31] border-b-4 border-[#C84F2B]"
           >
             <Link href="/dashboard">PLAY ONLINE WITH FRIENDS</Link>
           </Button>
           <Button
             asChild
             size="lg"
-            className="w-full text-lg font-bold !bg-secondary hover:!bg-secondary/90 h-16"
+            className="w-full text-xl font-bold h-16 bg-[#22C55E] hover:bg-[#1DAF52] border-b-4 border-[#178C42]"
           >
             <Link href="/play">PLAY OFFLINE SOLO MODE</Link>
           </Button>
           <Button
             asChild
             size="lg"
-            className="w-full text-lg font-bold !bg-accent hover:!bg-accent/90 h-16"
+            className="w-full text-xl font-bold h-16 bg-[#3B82F6] hover:bg-[#2572E9] border-b-4 border-[#1E4ED8]"
           >
             <Link href="/how-to-play">HOW TO PLAY</Link>
           </Button>
         </div>
 
-        <div className="absolute bottom-0 right-0 p-8">
+        <div className="absolute bottom-0 right-0 p-4 md:p-8">
           <Image
             src="https://storage.googleapis.com/project-game-assets/explorer_girl.png"
             alt="Explorer Character"
             width={200}
             height={250}
+            className="h-auto w-32 md:w-48"
             data-ai-hint="explorer girl cartoon"
           />
         </div>
