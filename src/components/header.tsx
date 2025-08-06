@@ -28,7 +28,6 @@ export default function Header() {
     router.push('/auth');
   };
 
-  // Don't render header on the auth page
   if (pathname === "/auth") {
     return null;
   }
@@ -36,11 +35,11 @@ export default function Header() {
   const isLandingPage = pathname === "/";
 
   return (
-    <header className={`fixed top-0 z-50 w-full border-b border-border/40 ${isLandingPage ? 'dark:bg-transparent bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60' : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
+    <header className={`fixed top-0 z-50 w-full border-b border-border/40 ${isLandingPage ? 'bg-transparent backdrop-blur supports-[backdrop-filter]:bg-background/60' : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 flex items-center">
           <Link href={user ? "/dashboard" : "/"} className="mr-6 flex items-center space-x-2">
-            <span className={`font-bold text-lg font-title ${isLandingPage ? 'dark:text-white text-foreground' : 'text-foreground'}`}>ATLAS</span>
+            <span className={`font-bold text-lg font-title ${isLandingPage ? 'text-white' : 'text-foreground'}`}>ATLAS</span>
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
@@ -87,7 +86,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild variant={isLandingPage ? "outline" : "default"} className={`${isLandingPage ? 'dark:border-white dark:text-white dark:hover:bg-white/20 border-primary text-primary hover:bg-primary/10' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
+            <Button asChild variant={isLandingPage ? "outline" : "default"} className={`${isLandingPage ? 'border-white text-white hover:bg-white/20' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
                 <Link href="/auth">
                     <LogIn className="mr-2 h-4 w-4" />
                     Login
