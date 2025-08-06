@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['var(--font-poppins)', 'sans-serif'],
-        headline: ['var(--font-poppins)', 'sans-serif'],
+        body: ['var(--font-lilita-one)', 'sans-serif'],
+        headline: ['var(--font-lilita-one)', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -28,10 +28,12 @@ export default {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          darker: 'hsl(var(--primary-darker))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
+          darker: 'hsl(var(--secondary-darker))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
@@ -40,10 +42,12 @@ export default {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
+          darker: 'hsl(var(--accent-darker))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
+          darker: 'hsl(var(--destructive-darker))',
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

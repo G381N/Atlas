@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
 body {
   font-family: 'Lilita One', 'Poppins', sans-serif;
 }
@@ -15,14 +17,18 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 16 87% 55%; /* Orange from image */
-    --primary-foreground: 210 40% 98%;
+    --primary-darker: 16 87% 45%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 120 40% 45%; /* Green from image */
-    --secondary-foreground: 210 40% 98%;
+    --secondary-darker: 120 40% 35%;
+    --secondary-foreground: 0 0% 100%;
     --muted: 196 74% 85%;
     --muted-foreground: 222 47% 31%;
     --accent: 217 63% 43%; /* Darker Blue from image */
-    --accent-foreground: 210 40% 98%;
+    --accent-darker: 217 63% 33%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
+    --destructive-darker: 0 84.2% 50.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 217 63% 43%;
     --input: 197 86% 80%;
@@ -50,14 +56,18 @@ body {
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
     --primary: 16 87% 55%; /* Orange from image */
-    --primary-foreground: 210 40% 98%;
+    --primary-darker: 16 87% 45%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 120 40% 45%; /* Green from image */
-    --secondary-foreground: 210 40% 98%;
+    --secondary-darker: 120 40% 35%;
+    --secondary-foreground: 0 0% 100%;
     --muted: 222 47% 20%;
     --muted-foreground: 210 40% 78%;
     --accent: 217 63% 63%; /* Lighter Blue for dark mode */
+    --accent-darker: 217 63% 53%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
+    --destructive-darker: 0 62.8% 20.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 217 63% 43%;
     --input: 222 47% 25%;

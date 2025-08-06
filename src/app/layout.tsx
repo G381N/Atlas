@@ -24,6 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet" />
+      </head>
       <body className={`${lilitaOne.variable} font-headline antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <Header />
