@@ -63,6 +63,9 @@
     @apply bg-background text-foreground;
     font-family: 'Poppins', sans-serif;
   }
+  main {
+    @apply pt-14; /* Add padding to offset fixed header */
+  }
   .font-title {
     font-family: 'Baloo 2', 'Poppins', sans-serif;
     text-shadow: 2px 2px 0px #1E3A8A, 4px 4px 0px rgba(0, 0, 0, 0.2);

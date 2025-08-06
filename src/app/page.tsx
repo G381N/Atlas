@@ -16,6 +16,8 @@ export default function Home() {
           className="z-0"
           priority
         />
+        <div className="absolute inset-0 bg-black/50 z-0"></div>
+
 
         {/* Animations */}
         <div className="stars"></div>

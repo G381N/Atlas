@@ -36,7 +36,7 @@ export default function Header() {
   const isLandingPage = pathname === "/";
 
   return (
-    <header className={`sticky top-0 z-50 w-full border-b border-border/40 ${isLandingPage ? 'bg-transparent text-white' : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
+    <header className={`fixed top-0 z-50 w-full border-b border-border/40 ${isLandingPage ? 'bg-transparent text-white' : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 flex items-center">
           <Link href={user ? "/dashboard" : "/"} className="mr-6 flex items-center space-x-2">
@@ -87,7 +87,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild variant={isLandingPage ? "outline" : "default"} className={`${isLandingPage ? 'border-white text-white hover:bg-white/20' : ''}`}>
+            <Button asChild variant={isLandingPage ? "outline" : "default"} className={`${isLandingPage ? 'border-white text-white hover:bg-white/20' : 'bg-[#00bfff] hover:bg-[#00bfff]/90'}`}>
                 <Link href="/auth">
                     <LogIn className="mr-2 h-4 w-4" />
                     Login

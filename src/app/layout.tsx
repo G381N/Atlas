@@ -26,8 +26,8 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: 'Where In The World?',
-  description: 'A geography-based web game.',
+  title: 'Atlas - A Geography Game',
+  description: 'A geography-based web game inspired by childhood classics.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
 
@@ -42,7 +42,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <AuthProvider>
             <Header />
-            <main>{children}</main>
+            <main className="pt-14">{children}</main>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>
