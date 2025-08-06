@@ -5,6 +5,7 @@ import './globals.css';
 import { ThemeProvider } from '@/context/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/context/auth-provider';
+import Header from '@/components/header';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} ${baloo.variable} ${caveat.variable} ${orbitron.variable} font-body antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <AuthProvider>
+            <Header />
             <main>{children}</main>
             <Toaster />
           </AuthProvider>
