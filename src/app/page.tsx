@@ -12,15 +12,15 @@ export default function Home() {
           alt="World Map Background"
           layout="fill"
           objectFit="cover"
+          className="block dark:hidden"
         />
-        <div className="hidden dark:block absolute inset-0 z-10">
-          <Image
-            src="/night.png"
-            alt="World Map Background"
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
+        <Image
+          src="/night.png"
+          alt="World Map Background"
+          layout="fill"
+          objectFit="cover"
+          className="hidden dark:block"
+        />
       </div>
 
       <div className="absolute top-4 right-4 z-20">
@@ -30,7 +30,7 @@ export default function Home() {
       <div className="relative z-10 flex flex-col items-center space-y-6 text-center text-white">
         <h1
           className="text-8xl md:text-9xl font-bold tracking-tight text-white uppercase"
-          style={{ WebkitTextStroke: '4px #1E3A8A', textStroke: '4px #1E3A8A' }}
+          style={{ WebkitTextStroke: '4px #1E3A8A', textStroke: '4.px #1E3A8A' }}
         >
           <span style={{ color: '#F56538' }}>A</span>
           <span style={{ color: '#3B82F6' }}>T</span>
