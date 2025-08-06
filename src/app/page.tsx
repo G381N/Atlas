@@ -58,7 +58,7 @@ export default function Home() {
             size="lg"
             className="w-full text-xl font-bold h-16 bg-[#F56538] hover:bg-[#E15A31] border-b-4 border-[#C84F2B]"
           >
-            <Link href="/dashboard">PLAY NOW</Link>
+            <Link href="/auth">PLAY NOW</Link>
           </Button>
         </div>
       </div>

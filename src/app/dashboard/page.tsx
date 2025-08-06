@@ -1,7 +1,12 @@
 
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Users, User, HelpCircle, Trophy, Play } from "lucide-react";
+import { Users, User, HelpCircle, Trophy } from "lucide-react";
+import { useAuth } from "@/context/auth-provider";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const menuItems = [
   {
@@ -32,6 +37,19 @@ const menuItems = [
 ];
 
 export default function DashboardPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth");
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) {
+    return <div className="container flex items-center justify-center h-screen"><p>Loading...</p></div>;
+  }
+  
   return (
     <div className="container mx-auto p-4 md:p-8 flex flex-col items-center">
       <div className="text-center mb-8 md:mb-12">
