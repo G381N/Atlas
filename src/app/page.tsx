@@ -25,7 +25,7 @@ export default function Home() {
           <span className="text-green-500">S</span>
         </h1>
 
-        <p className="mt-2 max-w-lg text-xl text-foreground font-semibold">
+        <p className="mt-2 max-w-lg text-xl text-white font-semibold">
           Name a place starting with the last letter of the previous one
         </p>
 
