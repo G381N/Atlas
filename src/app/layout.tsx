@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/context/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/header';
+import { AuthProvider } from '@/context/auth-provider';
 
 const lilitaOne = Lilita_One({
   subsets: ['latin'],
@@ -31,9 +32,11 @@ export default function RootLayout({
       </head>
       <body className={`${lilitaOne.variable} font-headline antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          <Header />
-          <main className="relative z-10">{children}</main>
-          <Toaster />
+          <AuthProvider>
+            <Header />
+            <main className="relative z-10">{children}</main>
+            <Toaster />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -16,10 +16,10 @@ export default function Home() {
       <div className="relative z-10 flex flex-col items-center space-y-6 text-center text-white">
         <h1
           className="text-8xl md:text-9xl font-bold tracking-tight text-white uppercase"
-          style={{ WebkitTextStroke: '4px #3B82F6' }}
+          style={{ WebkitTextStroke: '4px #1E40AF' }}
         >
           <span className="text-orange-500">A</span>
-          <span className="text-blue-500">T</span>
+          <span className="text-blue-600">T</span>
           <span className="text-yellow-400">L</span>
           <span className="text-orange-500">A</span>
           <span className="text-green-500">S</span>
@@ -33,21 +33,21 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="w-full text-lg font-bold !bg-primary hover:!bg-primary/90 !border-primary-darker h-16"
+            className="w-full text-lg font-bold !bg-primary hover:!bg-primary/90 h-16"
           >
             <Link href="/dashboard">PLAY ONLINE WITH FRIENDS</Link>
           </Button>
           <Button
             asChild
             size="lg"
-            className="w-full text-lg font-bold !bg-secondary hover:!bg-secondary/90 !border-secondary-darker h-16"
+            className="w-full text-lg font-bold !bg-secondary hover:!bg-secondary/90 h-16"
           >
             <Link href="/play">PLAY OFFLINE SOLO MODE</Link>
           </Button>
           <Button
             asChild
             size="lg"
-            className="w-full text-lg font-bold !bg-accent hover:!bg-accent/90 !border-accent-darker h-16"
+            className="w-full text-lg font-bold !bg-accent hover:!bg-accent/90 h-16"
           >
             <Link href="/how-to-play">HOW TO PLAY</Link>
           </Button>
