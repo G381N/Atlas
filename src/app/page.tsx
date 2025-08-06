@@ -30,11 +30,11 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-col items-center space-y-6 text-center text-white">
         <h1
-          className="text-8xl md:text-9xl font-bold tracking-tight text-white uppercase"
+          className="text-8xl md:text-9xl font-black tracking-tight uppercase"
           style={{
-            WebkitTextStroke: '4px #1E3A8A',
-            textStroke: '4px #1E3A8A',
-            textShadow: '6px 6px 0px rgba(0, 0, 0, 0.2)',
+            color: 'white',
+            textShadow:
+              '4px 4px 0px #1E3A8A, 8px 8px 0px rgba(0, 0, 0, 0.2)',
           }}
         >
           <span style={{ color: '#F56538' }}>A</span>
@@ -48,9 +48,8 @@ export default function Home() {
           className="mt-2 max-w-lg text-2xl text-white font-semibold px-4"
           style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.2)' }}
         >
-          Name a place starting with the last
-          <br />
-          letter of the previous one
+          The ultimate geography game. Challenge your friends, climb the
+          leaderboard, and become a true GeoGuess Master!
         </p>
 
         <div className="w-full max-w-sm space-y-4 pt-4">
@@ -59,7 +58,7 @@ export default function Home() {
             size="lg"
             className="w-full text-xl font-bold h-16 bg-[#F56538] hover:bg-[#E15A31] border-b-4 border-[#C84F2B]"
           >
-            <Link href="/dashboard">PLAY</Link>
+            <Link href="/dashboard">PLAY NOW</Link>
           </Button>
         </div>
       </div>

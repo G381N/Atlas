@@ -1,16 +1,16 @@
 
 import type { Metadata } from 'next';
-import { Lilita_One } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/header';
 import { AuthProvider } from '@/context/auth-provider';
 
-const lilitaOne = Lilita_One({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-lilita-one',
+  weight: ['400', '700', '900'],
+  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
@@ -29,9 +29,9 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${lilitaOne.variable} font-headline antialiased`}>
+      <body className={`${poppins.variable} font-headline antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <AuthProvider>
             <Header />
