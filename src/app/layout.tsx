@@ -1,15 +1,14 @@
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import { Lilita_One } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
-import ThreeScene from '@/components/three-scene';
 import Header from '@/components/header';
 
-const poppins = Poppins({
+const lilitaOne = Lilita_One({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-poppins',
+  weight: ['400'],
+  variable: '--font-lilita-one',
 });
 
 export const metadata: Metadata = {
@@ -25,9 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} font-headline antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ThreeScene />
+      <body className={`${lilitaOne.variable} font-headline antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <Header />
           <main className="relative z-10">{children}</main>
           <Toaster />

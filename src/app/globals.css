@@ -3,28 +3,28 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Lilita One', 'Poppins', sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 196 74% 90%;
+    --background: 204 100% 60%; /* Light Blue from image */
     --foreground: 222 47% 11%;
-    --card: 196 74% 95%;
+    --card: 204 100% 90%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 197 86% 66%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 196 74% 85%;
-    --secondary-foreground: 222 47% 11%;
+    --primary: 16 87% 55%; /* Orange from image */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 120 40% 45%; /* Green from image */
+    --secondary-foreground: 210 40% 98%;
     --muted: 196 74% 85%;
     --muted-foreground: 222 47% 31%;
-    --accent: 52 87% 66%;
-    --accent-foreground: 48 96% 26%;
+    --accent: 217 63% 43%; /* Darker Blue from image */
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 197 86% 56%;
+    --border: 217 63% 43%;
     --input: 197 86% 80%;
     --ring: 197 86% 66%;
     --chart-1: 12 76% 61%;
@@ -32,7 +32,7 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.8rem;
+    --radius: 1.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -43,23 +43,23 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 222 47% 11%;
+    --background: 220 40% 10%;
     --foreground: 210 40% 98%;
-    --card: 222 47% 15%;
+    --card: 220 40% 15%;
     --card-foreground: 210 40% 98%;
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
-    --primary: 197 86% 66%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 222 47% 20%;
+    --primary: 16 87% 55%; /* Orange from image */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 120 40% 45%; /* Green from image */
     --secondary-foreground: 210 40% 98%;
     --muted: 222 47% 20%;
     --muted-foreground: 210 40% 78%;
-    --accent: 52 87% 66%;
-    --accent-foreground: 48 96% 26%;
+    --accent: 217 63% 63%; /* Lighter Blue for dark mode */
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 222 47% 25%;
+    --border: 217 63% 43%;
     --input: 222 47% 25%;
     --ring: 197 86% 66%;
     --chart-1: 220 70% 50%;

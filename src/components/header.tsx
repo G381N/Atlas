@@ -32,16 +32,16 @@ export default function Header() {
         <div className="mr-4 flex items-center">
           <Link href="/dashboard" className="mr-6 flex items-center space-x-2">
             <Globe className="h-6 w-6 text-primary" />
-            <span className="font-bold">GeoGuess Master</span>
+            <span className="font-bold text-lg">GeoGuess Master</span>
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
           <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full border-2 border-primary">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="https://placehold.co/40x40" alt="User" />
+                  <AvatarImage src="https://placehold.co/40x40" alt="User" data-ai-hint="user avatar" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               </Button>
