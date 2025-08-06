@@ -28,18 +28,20 @@ export default function Header() {
     router.push('/auth');
   };
 
-  // Don't render header on the auth or landing page
-  if (pathname === "/auth" || pathname === "/") {
+  // Don't render header on the auth page
+  if (pathname === "/auth") {
     return null;
   }
 
+  const isLandingPage = pathname === "/";
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className={`sticky top-0 z-50 w-full border-b border-border/40 ${isLandingPage ? 'bg-transparent' : 'bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 flex items-center">
-          <Link href="/dashboard" className="mr-6 flex items-center space-x-2">
+          <Link href={user ? "/dashboard" : "/"} className="mr-6 flex items-center space-x-2">
             <Globe className="h-6 w-6 text-primary" />
-            <span className="font-bold text-lg">GeoGuess Master</span>
+            <span className="font-bold text-lg font-title">GeoGuess Master</span>
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
@@ -66,6 +68,12 @@ export default function Header() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <Link href="/dashboard" passHref>
+                  <DropdownMenuItem>
+                    <UserIcon className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+                </Link>
                 <Link href="/profile" passHref>
                   <DropdownMenuItem>
                     <UserIcon className="mr-2 h-4 w-4" />

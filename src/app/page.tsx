@@ -10,19 +10,19 @@ export default function Home() {
       <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/night.png"
+          src="https://storage.googleapis.com/project-game-assets/night.png"
           alt="Night World Map"
           layout="fill"
           objectFit="cover"
           className="z-0"
+          priority
         />
 
         {/* Animations */}
         <div className="stars"></div>
         <div className="twinkling"></div>
-        <div className="moon"></div>
         <div className="plane">
-          <svg
+           <svg
             width="50"
             height="50"
             viewBox="0 0 24 24"
@@ -36,6 +36,7 @@ export default function Home() {
             <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-1-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path>
           </svg>
         </div>
+
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center space-y-4 text-center text-white p-4">
