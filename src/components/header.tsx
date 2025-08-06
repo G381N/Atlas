@@ -13,9 +13,20 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useEffect, useState } from "react";
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Render a placeholder or null on the server to avoid hydration mismatch
+    return <div className="h-10 w-10" />;
+  }
 
   return (
     <Button
@@ -34,10 +45,33 @@ const ThemeToggle = () => {
 export default function Header() {
   const { theme } = useTheme();
   const { user, logout } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navClasses = theme === 'dark' 
     ? "bg-blue-900/80" 
     : "bg-blue-500/80";
+
+  // Render a placeholder or a default state on the server
+  if (!mounted) {
+    return (
+        <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-transparent">
+             <div className="container mx-auto flex h-full items-center justify-between">
+                {/* Keep layout consistent */}
+                 <Link href="/" className="text-3xl font-bold font-title text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.4)'}}>
+                    ATLAS
+                </Link>
+                <div className="flex items-center gap-4">
+                    <div className="h-10 w-10" />
+                    <div className="h-10 w-10" />
+                </div>
+             </div>
+        </header>
+    );
+  }
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-sm ${navClasses}`}>
