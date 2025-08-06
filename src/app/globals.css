@@ -118,6 +118,7 @@
   position: absolute;
   z-index: 4;
   animation: plane-fly 25s linear infinite;
+  transform: scale(0.5) rotate(15deg);
 }
 
 

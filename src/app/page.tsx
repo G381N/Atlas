@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown } from 'lucide-react';
@@ -41,7 +40,7 @@ export default function Home() {
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center space-y-4 text-center text-white p-4">
           <h1 className="text-6xl md:text-8xl font-bold font-title">
-            🌍 Where In The World?
+            Welcome to Atlas
           </h1>
           <p className="mt-2 max-w-2xl text-lg md:text-xl font-body text-gray-200" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
             A throwback geography game from school bus rides and recess breaks.
