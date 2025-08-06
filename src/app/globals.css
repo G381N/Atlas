@@ -109,6 +109,10 @@
     animation: blink 1.5s infinite ease-in-out;
 }
 
+.light .flight-paths-container {
+    display: none;
+}
+
 .flight-dot-white {
     background-color: hsla(60, 100%, 90%, 0.8);
     box-shadow: 0 0 3px 1px hsla(60, 100%, 90%, 0.5);

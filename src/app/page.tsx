@@ -11,7 +11,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Animations */}
-        <FlightPaths />
+        <div className="flight-paths-container">
+          <FlightPaths />
+        </div>
 
 
         {/* Hero Content */}
@@ -51,11 +53,12 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#121212] py-8 text-center text-gray-400">
+      <footer className="bg-black/80 py-8 text-center text-gray-400 backdrop-blur-sm">
         <div className="container mx-auto">
-          <p className="font-body">Made for nostalgia. Purely out of childhood memories.</p>
-          <a href="https://gebin.net" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-body text-red-500 hover:underline transition-colors">
-            Click here to view my portfolio →
+          <p className="font-futuristic text-lg">ATLAS</p>
+          <p className="font-body text-sm">Made for nostalgia. Built for the modern web.</p>
+          <a href="https://gebin.net" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-body text-sm text-primary hover:underline transition-colors">
+            Portfolio
           </a>
         </div>
       </footer>
