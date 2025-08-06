@@ -4,7 +4,6 @@ import { Baloo_2, Poppins, Caveat, Orbitron } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
-import Header from '@/components/header';
 import { AuthProvider } from '@/context/auth-provider';
 
 const poppins = Poppins({
@@ -48,8 +47,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} ${baloo.variable} ${caveat.variable} ${orbitron.variable} font-body antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <AuthProvider>
-            <Header />
-            <main className="pt-14">{children}</main>
+            <main>{children}</main>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>
