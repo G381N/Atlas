@@ -80,11 +80,16 @@
 
 /* New Hero Background Style */
 .hero-background {
-  background-image: url('/night.png');
+  background-image: url('/day.png'); /* Default to day image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.dark .hero-background {
+  background-image: url('/night.png'); /* Switch to night image in dark mode */
+}
+
 
 /* Animations for Hero Section */
 

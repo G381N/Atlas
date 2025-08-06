@@ -7,12 +7,11 @@ export default function Home() {
   return (
     <>
       <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden hero-background">
-        {/* Background is now handled by CSS */}
         <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Animations */}
-        <div className="stars"></div>
-        <div className="twinkling"></div>
+        <div className="dark:stars"></div>
+        <div className="dark:twinkling"></div>
         <div className="plane">
            <svg
             width="50"
