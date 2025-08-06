@@ -95,15 +95,33 @@
 
 
 /* Animations for Hero Section */
+@keyframes blink {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
 
 .flight-dot {
     position: absolute;
-    background-color: hsla(60, 100%, 90%, 0.7);
     border-radius: 50%;
-    width: 3px;
-    height: 3px;
-    box-shadow: 0 0 4px 1px hsla(60, 100%, 90%, 0.7);
+    width: 2px;
+    height: 2px;
     will-change: transform;
+    animation: blink 1.5s infinite ease-in-out;
+}
+
+.flight-dot-white {
+    background-color: hsla(60, 100%, 90%, 0.8);
+    box-shadow: 0 0 3px 1px hsla(60, 100%, 90%, 0.5);
+}
+
+.flight-dot-red {
+    background-color: hsla(0, 100%, 80%, 0.8);
+    box-shadow: 0 0 3px 1px hsla(0, 100%, 80%, 0.5);
+}
+
+.flight-dot-green {
+    background-color: hsla(120, 100%, 80%, 0.8);
+    box-shadow: 0 0 3px 1px hsla(120, 100%, 80%, 0.5);
 }
 
 

@@ -4,9 +4,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Configuration
-const NUM_DOTS = 50;
-const MIN_DURATION = 5; // seconds
-const MAX_DURATION = 15; // seconds
+const NUM_DOTS = 70; // Increased for more traffic
+const MIN_DURATION = 25; // seconds, slowed down
+const MAX_DURATION = 50; // seconds, slowed down
 
 const CONTINENTS = {
     NORTH_AMERICA: { x: 25, y: 35 },
@@ -18,6 +18,7 @@ const CONTINENTS = {
 };
 
 const continentKeys = Object.keys(CONTINENTS);
+const dotColors = ['red', 'green', 'white'];
 
 const getRandomContinent = (exclude?: string) => {
     let continents = continentKeys;
@@ -37,6 +38,7 @@ interface Dot {
     controlY: number;
     startTime: number;
     duration: number;
+    colorClass: string;
 }
 
 const createDot = (id: number, now: number): Dot => {
@@ -60,19 +62,21 @@ const createDot = (id: number, now: number): Dot => {
     const dx = endX - startX;
     const dy = endY - startY;
     const distance = Math.sqrt(dx*dx + dy*dy);
-    const curveAmount = distance / 200; // Adjust curve amount based on distance
+    const curveAmount = distance / 200;
     
     const controlX = midX + (Math.random() - 0.5) * distance * 0.5 - dy * curveAmount;
     const controlY = midY + (Math.random() - 0.5) * distance * 0.5 + dx * curveAmount;
-
+    
+    const color = dotColors[Math.floor(Math.random() * dotColors.length)];
 
     return {
         id,
         startX, startY,
         endX, endY,
         controlX, controlY,
-        startTime: now + Math.random() * MAX_DURATION * 1000, // Start at a random time
+        startTime: now + Math.random() * MAX_DURATION * 1000,
         duration: duration * 1000,
+        colorClass: `flight-dot-${color}`
     };
 };
 
@@ -97,22 +101,18 @@ const FlightPaths = () => {
                     let t = elapsed / dot.duration;
 
                     if (t >= 1) {
-                        // Reset the dot
-                        const newDot = createDot(dot.id, now);
-                        dots[i] = newDot; 
+                        dots[i] = createDot(dot.id, now); 
                         t = 0;
                     }
                     
-                    if(t < 0) t = 0; // Don't move if start time is in the future
+                    if(t < 0) t = 0;
 
-                    // Quadratic Bezier curve calculation
                     const x = (1 - t) * (1 - t) * dot.startX + 2 * (1 - t) * t * dot.controlX + t * t * dot.endX;
                     const y = (1 - t) * (1 - t) * dot.startY + 2 * (1 - t) * t * dot.controlY + t * t * dot.endY;
 
                     const element = dotElements[i] as HTMLDivElement;
                     if (element) {
                         element.style.transform = `translate(${x}vw, ${y}vh)`;
-                        // Fade in at the start and fade out at the end
                         if (t < 0.1) {
                             element.style.opacity = (t * 10).toString();
                         } else if (t > 0.9) {
@@ -136,7 +136,9 @@ const FlightPaths = () => {
 
     return (
         <div ref={containerRef} className="absolute inset-0 z-2 pointer-events-none">
-            {dots.map(dot => <div key={dot.id} className="flight-dot" style={{ opacity: 0 }} />)}
+            {dots.map(dot => (
+                <div key={dot.id} className={`flight-dot ${dot.colorClass}`} style={{ opacity: 0 }} />
+            ))}
         </div>
     );
 };
