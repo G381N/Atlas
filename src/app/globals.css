@@ -1,12 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
-
-body {
-  font-family: 'Lilita One', 'Poppins', sans-serif;
-}
 
 @layer base {
   :root {
@@ -94,5 +90,6 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Lilita One', 'Poppins', sans-serif;
   }
 }
