@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { AlertCircle, CheckCircle, Clock, Star, Trophy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { validatePlace } from '@/actions/game';
+import { validatePlace, saveScore } from '@/actions/game';
 import Link from 'next/link';
 
 const INITIAL_TIME = 30; // 30 seconds
@@ -24,6 +24,7 @@ export default function GamePage() {
     gameOver: false,
     isSubmitting: false,
   });
+  const [username, setUsername] = useState("Explorer"); // In a real app, this would come from auth.
 
   const [inputValue, setInputValue] = useState('');
   const { toast } = useToast();
@@ -39,11 +40,25 @@ export default function GamePage() {
     setGameState(prev => ({ ...prev, currentLetter: generateNewLetter() }));
   }, [generateNewLetter]);
   
+  const handleGameOver = useCallback(async (score: number) => {
+    setGameState(prev => ({ ...prev, gameOver: true }));
+    try {
+      await saveScore(score, username);
+    } catch (error) {
+      console.error("Failed to save score", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Could not save your score. Please try again later.",
+      });
+    }
+  }, [username, toast]);
+
   useEffect(() => {
     if (gameState.gameOver) return;
 
     if (gameState.timeLeft <= 0) {
-      setGameState(prev => ({ ...prev, gameOver: true }));
+      handleGameOver(gameState.score);
       return;
     }
 
@@ -52,7 +67,7 @@ export default function GamePage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState.timeLeft, gameState.gameOver]);
+  }, [gameState.timeLeft, gameState.gameOver, gameState.score, handleGameOver]);
 
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,7 +95,7 @@ export default function GamePage() {
     setGameState(prev => ({ ...prev, isSubmitting: true }));
     
     try {
-        const result = await validatePlace({ placeName, category: "Any" });
+        const result = await validatePlace({ placeName });
 
         if (result.isValid) {
             toast({
