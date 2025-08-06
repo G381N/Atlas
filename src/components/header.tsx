@@ -22,7 +22,7 @@ const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-full text-white hover:bg-white/20"
+      className="rounded-full text-white hover:bg-white/20 transition-colors"
     >
       <Sun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -67,7 +67,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild className="bg-white text-blue-600 font-bold hover:bg-gray-200 rounded-full">
+            <Button asChild className="bg-white text-blue-600 font-bold hover:bg-gray-200 rounded-full transition-colors">
               <Link href="/auth">
                 <LogIn className="mr-2 h-5 w-5" />
                 Login
