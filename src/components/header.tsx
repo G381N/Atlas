@@ -35,16 +35,29 @@ export default function Header() {
   }
 
   const isLandingPage = pathname === "/";
-  const headerClasses = `fixed top-0 z-50 w-full transition-all duration-300 ${
+  
+  // Define base classes that apply to all states
+  const baseHeaderClasses = "fixed top-0 z-50 w-full transition-all duration-300";
+
+  // Define classes for specific states
+  const landingPageClasses = "bg-black/20 backdrop-blur-sm border-b border-white/10";
+  const darkThemeClasses = "bg-background/95 backdrop-blur-sm border-b";
+  const lightThemeClasses = "bg-background/80 backdrop-blur-sm border-b";
+
+  const headerClasses = `${baseHeaderClasses} ${
     isLandingPage 
-      ? 'bg-black/20 backdrop-blur-sm border-b border-white/10' 
+      ? landingPageClasses 
       : theme === 'dark' 
-        ? 'bg-background/95 backdrop-blur-sm border-b' 
-        : 'bg-background/80 backdrop-blur-sm border-b'
+        ? darkThemeClasses 
+        : lightThemeClasses
   }`;
   
+  const atlasTextClasses = isLandingPage ? 'text-white' : 'text-foreground';
+  
   const loginButtonClasses = `border-cyan-400 bg-transparent neon-glow-button rounded-full ${
-    theme === 'light' && !isLandingPage ? 'text-black hover:text-black' : 'text-cyan-400 hover:text-white'
+    theme === 'light' && !isLandingPage 
+      ? 'text-foreground hover:text-foreground border-foreground' 
+      : 'text-cyan-400 hover:text-white'
   }`;
 
 
@@ -52,7 +65,7 @@ export default function Header() {
     <header className={headerClasses}>
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
-          <span className={`text-2xl font-bold font-futuristic tracking-wider ${isLandingPage ? 'text-white' : 'text-foreground'}`}>ATLAS</span>
+          <span className={`text-2xl font-bold font-futuristic tracking-wider ${atlasTextClasses}`}>ATLAS</span>
         </Link>
         
         <div className="flex items-center space-x-2 md:space-x-4">
