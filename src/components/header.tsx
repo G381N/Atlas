@@ -40,7 +40,7 @@ export default function Header() {
       ? 'bg-black/20 backdrop-blur-sm border-b border-white/10' 
       : theme === 'dark' 
         ? 'bg-background/95 backdrop-blur-sm border-b' 
-        : 'bg-blue-200 border-b'
+        : 'bg-background/80 backdrop-blur-sm border-b'
   }`;
   
   const loginButtonClasses = `border-cyan-400 bg-transparent neon-glow-button rounded-full ${
@@ -50,9 +50,9 @@ export default function Header() {
 
   return (
     <header className={headerClasses}>
-      <div className="container flex h-14 max-w-screen-2xl items-center">
-        <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2 mr-auto">
-          <span className={`text-2xl font-bold font-futuristic tracking-wider ${isLandingPage ? 'text-white' : ''}`}>ATLAS</span>
+      <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
+        <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
+          <span className={`text-2xl font-bold font-futuristic tracking-wider ${isLandingPage ? 'text-white' : 'text-foreground'}`}>ATLAS</span>
         </Link>
         
         <div className="flex items-center space-x-2 md:space-x-4">
