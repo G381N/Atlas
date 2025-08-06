@@ -12,15 +12,15 @@ export default function Home() {
           alt="World Map Background"
           layout="fill"
           objectFit="cover"
-          className="dark:hidden"
         />
-        <Image
-          src="/night.png"
-          alt="World Map Background"
-          layout="fill"
-          objectFit="cover"
-          className="hidden dark:block"
-        />
+        <div className="hidden dark:block absolute inset-0 z-10">
+          <Image
+            src="/night.png"
+            alt="World Map Background"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       </div>
 
       <div className="absolute top-4 right-4 z-20">
