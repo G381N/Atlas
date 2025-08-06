@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Lilita_One } from 'next/font/google';
 import './globals.css';

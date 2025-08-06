@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -27,8 +28,8 @@ export default function Header() {
     router.push('/auth');
   };
 
-  // Don't render header on the auth page
-  if (pathname === "/auth") {
+  // Don't render header on the auth or landing page
+  if (pathname === "/auth" || pathname === "/") {
     return null;
   }
 

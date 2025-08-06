@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import Image from 'next/image';
@@ -58,21 +59,7 @@ export default function Home() {
             size="lg"
             className="w-full text-xl font-bold h-16 bg-[#F56538] hover:bg-[#E15A31] border-b-4 border-[#C84F2B]"
           >
-            <Link href="/dashboard">PLAY ONLINE WITH FRIENDS</Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            className="w-full text-xl font-bold h-16 bg-[#22C55E] hover:bg-[#1DAF52] border-b-4 border-[#178C42]"
-          >
-            <Link href="/play">PLAY OFFLINE SOLO MODE</Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            className="w-full text-xl font-bold h-16 bg-[#3B82F6] hover:bg-[#2572E9] border-b-4 border-[#1E4ED8]"
-          >
-            <Link href="/how-to-play">HOW TO PLAY</Link>
+            <Link href="/dashboard">PLAY</Link>
           </Button>
         </div>
       </div>
