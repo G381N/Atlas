@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,10 +22,15 @@ export default function Home() {
           className="hidden dark:block"
         />
       </div>
+
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeToggle />
+      </div>
+
       <div className="relative z-10 flex flex-col items-center space-y-6 text-center text-white">
         <h1
           className="text-8xl md:text-9xl font-bold tracking-tight text-white uppercase"
-          style={{ WebkitTextStroke: '4px #1E3A8A' }}
+          style={{ WebkitTextStroke: '4px #1E3A8A', textStroke: '4px #1E3A8A' }}
         >
           <span style={{ color: '#F56538' }}>A</span>
           <span style={{ color: '#3B82F6' }}>T</span>
@@ -61,17 +67,6 @@ export default function Home() {
           >
             <Link href="/how-to-play">HOW TO PLAY</Link>
           </Button>
-        </div>
-
-        <div className="absolute bottom-0 right-0 p-4 md:p-8">
-          <Image
-            src="https://storage.googleapis.com/project-game-assets/explorer_girl.png"
-            alt="Explorer Character"
-            width={200}
-            height={250}
-            className="h-auto w-32 md:w-48"
-            data-ai-hint="explorer girl cartoon"
-          />
         </div>
       </div>
     </div>
