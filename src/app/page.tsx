@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, Github, Instagram, Globe } from 'lucide-react';
 import FlightPaths from '@/components/flight-paths';
 
 export default function Home() {
@@ -53,13 +53,36 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black/80 py-8 text-center text-gray-400 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <p className="font-futuristic text-lg">ATLAS</p>
-          <p className="font-body text-sm">Made for nostalgia. Built for the modern web.</p>
-          <a href="https://gebin.net" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-body text-sm text-primary hover:underline transition-colors">
-            Portfolio
-          </a>
+      <footer className="bg-black/80 py-12 text-gray-300 backdrop-blur-sm font-body">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+          {/* About Section */}
+          <div>
+            <h3 className="font-futuristic text-xl font-bold text-white mb-4">ATLAS</h3>
+            <p className="text-sm">A geography game for the modern web, inspired by nostalgia and built with passion.</p>
+          </div>
+          
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-futuristic text-lg font-bold text-white mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/how-to-play" className="hover:text-primary transition-colors">How to Play</Link></li>
+              <li><Link href="/leaderboard" className="hover:text-primary transition-colors">Leaderboard</Link></li>
+              <li><Link href="/auth" className="hover:text-primary transition-colors">Login / Sign Up</Link></li>
+            </ul>
+          </div>
+
+          {/* Connect Section */}
+          <div>
+             <h3 className="font-futuristic text-lg font-bold text-white mb-4">Connect</h3>
+             <div className="flex justify-center md:justify-start space-x-4">
+                <a href="https://github.com/gebin-george" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Github className="h-6 w-6" /></a>
+                <a href="https://instagram.com/gebin.george" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Instagram className="h-6 w-6" /></a>
+                <a href="https://gebin.net" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors"><Globe className="h-6 w-6" /></a>
+             </div>
+          </div>
+        </div>
+        <div className="container mx-auto mt-8 pt-8 border-t border-gray-700 text-center text-sm text-gray-500">
+            <p>&copy; {new Date().getFullYear()} Gebin George. All Rights Reserved.</p>
         </div>
       </footer>
     </>
