@@ -17,11 +17,13 @@ import {
 import { LogOut, User as UserIcon, LogIn } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 export default function Header() {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const { theme } = useTheme();
 
   const handleLogout = async () => {
     await logout();
@@ -36,15 +38,21 @@ export default function Header() {
   const headerClasses = `fixed top-0 z-50 w-full transition-all duration-300 ${
     isLandingPage 
       ? 'bg-black/20 backdrop-blur-sm border-b border-white/10' 
-      : 'bg-background/95 backdrop-blur-sm border-b'
+      : theme === 'dark' 
+        ? 'bg-background/95 backdrop-blur-sm border-b' 
+        : 'bg-blue-200 border-b'
+  }`;
+  
+  const loginButtonClasses = `border-cyan-400 bg-transparent neon-glow-button rounded-full ${
+    theme === 'light' && !isLandingPage ? 'text-black hover:text-black' : 'text-cyan-400 hover:text-white'
   }`;
 
 
   return (
     <header className={headerClasses}>
-      <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
-        <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
-          <span className={`text-2xl font-bold font-futuristic tracking-wider ${isLandingPage ? 'text-white' : 'text-foreground'}`}>ATLAS</span>
+      <div className="container flex h-14 max-w-screen-2xl items-center">
+        <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2 mr-auto">
+          <span className={`text-2xl font-bold font-futuristic tracking-wider ${isLandingPage ? 'text-white' : ''}`}>ATLAS</span>
         </Link>
         
         <div className="flex items-center space-x-2 md:space-x-4">
@@ -91,7 +99,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-             <Button asChild variant="outline" className="border-cyan-400 text-cyan-400 bg-transparent hover:bg-cyan-400/20 hover:text-white neon-glow-button rounded-full">
+             <Button asChild variant="outline" className={loginButtonClasses}>
                 <Link href="/auth">
                     <LogIn className="mr-2 h-4 w-4" />
                     Login
