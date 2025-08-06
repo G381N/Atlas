@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
-import { Moon, Sun, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { useAuth } from "@/context/auth-provider";
 import {
   DropdownMenu,
@@ -14,33 +14,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useEffect, useState } from "react";
-
-const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    // Render a placeholder or null on the server to avoid hydration mismatch
-    return <div className="h-10 w-10" />;
-  }
-
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-full text-white hover:bg-white/20 transition-colors"
-    >
-      <Sun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      <span className="sr-only">Toggle theme</span>
-    </Button>
-  );
-};
+import { ThemeToggle } from "./theme-toggle";
 
 export default function Header() {
   const { theme } = useTheme();
@@ -51,30 +25,30 @@ export default function Header() {
     setMounted(true);
   }, []);
 
-  const navClasses = theme === 'dark' 
-    ? "bg-blue-900/80" 
-    : "bg-blue-500/80";
+  const headerClasses =
+    theme === 'dark'
+      ? "bg-blue-900/80"
+      : "bg-blue-500/80";
 
-  // Render a placeholder or a default state on the server
+  // Render a placeholder or a default state on the server to prevent hydration mismatch
   if (!mounted) {
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-transparent">
-             <div className="container mx-auto flex h-full items-center justify-between">
-                {/* Keep layout consistent */}
-                 <Link href="/" className="text-3xl font-bold font-title text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.4)'}}>
-                    ATLAS
-                </Link>
-                <div className="flex items-center gap-4">
-                    <div className="h-10 w-10" />
-                    <div className="h-10 w-10" />
-                </div>
-             </div>
-        </header>
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-transparent backdrop-blur-sm">
+        <div className="container mx-auto flex h-full items-center justify-between">
+          <Link href="/" className="text-3xl font-bold font-title text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.4)'}}>
+            ATLAS
+          </Link>
+          <div className="flex items-center gap-4">
+            <div className="h-10 w-10" /> 
+            <div className="h-10 w-10 rounded-full bg-gray-500/50" />
+          </div>
+        </div>
+      </header>
     );
   }
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-sm ${navClasses}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 h-16 backdrop-blur-sm ${headerClasses}`}>
       <div className="container mx-auto flex h-full items-center justify-between">
         <Link href="/" className="text-3xl font-bold font-title text-white" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.4)'}}>
           ATLAS
@@ -84,7 +58,7 @@ export default function Header() {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:ring-2 hover:ring-cyan-400 transition-all">
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={user.photoURL || "https://placehold.co/40x40"} />
                     <AvatarFallback>{user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}</AvatarFallback>
@@ -101,7 +75,7 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild className="bg-white text-blue-600 font-bold hover:bg-gray-200 rounded-full transition-colors">
+            <Button asChild className="text-white font-bold rounded-full transition-colors neon-glow-button">
               <Link href="/auth">
                 <LogIn className="mr-2 h-5 w-5" />
                 Login
