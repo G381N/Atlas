@@ -36,22 +36,11 @@ export default function Header() {
 
   const isLandingPage = pathname === "/";
   
-  // Define base classes that apply to all states
   const baseHeaderClasses = "fixed top-0 z-50 w-full transition-all duration-300";
-
-  // Define classes for specific states
   const landingPageClasses = "bg-black/20 backdrop-blur-sm border-b border-white/10";
-  const darkThemeClasses = "bg-background/95 backdrop-blur-sm border-b";
-  const lightThemeClasses = "bg-background/80 backdrop-blur-sm border-b";
+  const otherPageClasses = "bg-background/95 backdrop-blur-sm border-b";
 
-  const headerClasses = `${baseHeaderClasses} ${
-    isLandingPage 
-      ? landingPageClasses 
-      : theme === 'dark' 
-        ? darkThemeClasses 
-        : lightThemeClasses
-  }`;
-  
+  const headerClasses = `${baseHeaderClasses} ${isLandingPage ? landingPageClasses : otherPageClasses}`;
   const atlasTextClasses = isLandingPage ? 'text-white' : 'text-foreground';
   
   const loginButtonClasses = `border-cyan-400 bg-transparent neon-glow-button rounded-full ${
@@ -63,7 +52,7 @@ export default function Header() {
 
   return (
     <header className={headerClasses}>
-      <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
+      <div className="container flex h-14 items-center justify-between">
         <Link href={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
           <span className={`text-2xl font-bold font-futuristic tracking-wider ${atlasTextClasses}`}>ATLAS</span>
         </Link>
