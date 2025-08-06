@@ -27,8 +27,8 @@ export default function Header() {
     router.push('/auth');
   };
 
-  // Don't render header on the landing page or auth page
-  if (["/", "/auth"].includes(pathname)) {
+  // Don't render header on the auth page
+  if (pathname === "/auth") {
     return null;
   }
 

@@ -30,7 +30,11 @@ export default function Home() {
       <div className="relative z-10 flex flex-col items-center space-y-6 text-center text-white">
         <h1
           className="text-8xl md:text-9xl font-bold tracking-tight text-white uppercase"
-          style={{ WebkitTextStroke: '4px #1E3A8A', textStroke: '4.px #1E3A8A' }}
+          style={{
+            WebkitTextStroke: '4px #1E3A8A',
+            textStroke: '4px #1E3A8A',
+            textShadow: '6px 6px 0px rgba(0, 0, 0, 0.2)',
+          }}
         >
           <span style={{ color: '#F56538' }}>A</span>
           <span style={{ color: '#3B82F6' }}>T</span>
@@ -39,7 +43,10 @@ export default function Home() {
           <span style={{ color: '#22C55E' }}>S</span>
         </h1>
 
-        <p className="mt-2 max-w-lg text-2xl text-white font-semibold px-4" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.2)'}}>
+        <p
+          className="mt-2 max-w-lg text-2xl text-white font-semibold px-4"
+          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.2)' }}
+        >
           Name a place starting with the last
           <br />
           letter of the previous one
