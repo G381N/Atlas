@@ -191,14 +191,14 @@
 .text-atlas-green { color: var(--atlas-green); }
 
 .btn-primary {
-  @apply bg-[#E54D4D] border-[#A73434] text-white hover:bg-[#C94040] active:translate-y-px;
+  @apply bg-[#E54D4D] border-b-4 border-[#A73434] text-white hover:bg-[#C94040] active:translate-y-px;
 }
 .btn-secondary {
-  @apply bg-[#50E3C2] border-[#38A88E] text-slate-800 hover:bg-[#45D1B1] active:translate-y-px;
+  @apply bg-[#50E3C2] border-b-4 border-[#38A88E] text-slate-800 hover:bg-[#45D1B1] active:translate-y-px;
 }
 .btn-accent {
-  @apply bg-[#4A90E2] border-[#3469A6] text-white hover:bg-[#417EC7] active:translate-y-px;
+  @apply bg-[#4A90E2] border-b-4 border-[#3469A6] text-white hover:bg-[#417EC7] active:translate-y-px;
 }
 .btn-warning {
-  @apply bg-[#F5A623] border-[#B57C1A] text-white hover:bg-[#DFA020] active:translate-y-px;
+  @apply bg-[#F5A623] border-b-4 border-[#B57C1A] text-white hover:bg-[#DFA020] active:translate-y-px;
 }

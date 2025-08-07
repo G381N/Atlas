@@ -6,8 +6,6 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
       <main>{children}</main>
-    </>
   );
 }
