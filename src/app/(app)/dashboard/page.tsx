@@ -157,7 +157,7 @@ export default function DashboardPage() {
             <Button
               key={item.title}
               asChild
-              className={`w-full h-16 text-xl font-bold justify-center rounded-full shadow-lg border-b-4 ${item.className}`}
+              className={`w-full h-16 text-xl font-bold justify-center rounded-full ${item.className}`}
               disabled={item.disabled}
             >
               <Link href={item.href}>
