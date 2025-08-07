@@ -110,7 +110,7 @@ export default function DashboardPage() {
             <DropdownMenuItem className="flex items-center justify-between">
                <Label htmlFor="theme-toggle" className="flex items-center gap-2 cursor-pointer">
                 {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                <span>Theme</span>
+                <span>{theme === 'light' ? 'Day Mode' : 'Night Mode'}</span>
               </Label>
               <Switch id="theme-toggle" checked={theme === 'dark'} onCheckedChange={toggleTheme} />
             </DropdownMenuItem>
@@ -148,8 +148,8 @@ export default function DashboardPage() {
           <span className="text-atlas-red">A</span>
           <span className="text-atlas-green">S</span>
         </h1>
-        <p className="text-white text-lg md:text-xl max-w-md mb-8" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>
-          Name a place starting with the last letter of the previous one
+        <p className="font-quote text-white text-2xl md:text-3xl max-w-md mb-8" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>
+          Name a place for a country, starting with the letter A
         </p>
 
         <div className="w-full max-w-sm space-y-4">
