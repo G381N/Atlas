@@ -10,8 +10,6 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/auth-provider";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);

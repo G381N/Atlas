@@ -12,7 +12,7 @@ export default function AuthLayout({
   return (
     <div className="relative min-h-screen">
        <div className="absolute top-4 left-4 z-10">
-         <Button asChild variant="ghost" size="icon" className="rounded-full text-white hover:bg-white/20 hover:text-foreground">
+         <Button asChild variant="ghost" size="icon" className="rounded-full text-white hover:bg-white/20 hover:text-white">
             <Link href="/">
                 <ArrowLeft className="h-6 w-6" />
                 <span className="sr-only">Back to Home</span>
