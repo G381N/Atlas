@@ -64,12 +64,6 @@ export default function AuthPage() {
   return (
     <div className="flex min-h-screen items-center justify-center p-4 relative hero-background">
       <div className="absolute inset-0 bg-black/50 z-0"></div>
-        <Button asChild variant="ghost" size="icon" className="absolute top-4 left-4 z-10 text-white hover:bg-white/20">
-            <Link href="/">
-                <ArrowLeft className="h-6 w-6" />
-                <span className="sr-only">Back to Home</span>
-            </Link>
-        </Button>
       <Card className="w-full max-w-sm mx-auto bg-card/80 backdrop-blur-sm z-10">
         <CardHeader>
           <CardTitle className="text-2xl">{isLogin ? "Login" : "Sign Up"}</CardTitle>
