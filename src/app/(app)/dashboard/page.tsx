@@ -88,7 +88,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 hero-background">
       <div className="absolute inset-0 bg-black/30 z-0"></div>
 
       {/* Header Icons */}
@@ -157,7 +157,7 @@ export default function DashboardPage() {
             <Button
               key={item.title}
               asChild
-              className={`w-full h-16 text-xl font-bold justify-center border-b-4 rounded-full ${item.className}`}
+              className={`w-full h-16 text-xl font-bold justify-center rounded-full ${item.className}`}
               disabled={item.disabled}
             >
               <Link href={item.href}>
