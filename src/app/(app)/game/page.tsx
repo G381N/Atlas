@@ -11,9 +11,9 @@ import { useToast } from '@/hooks/use-toast';
 import { validatePlace, saveScore } from '@/actions/game';
 import Link from 'next/link';
 
-const INITIAL_TIME = 30; // 30 seconds
-const TIME_DECREMENT = 2; // Reduce time by 2s
-const SCORE_MILESTONE = 5; // Every 5 correct answers
+const INITIAL_TIME = 60; // Increased time for more thoughtful answers
+const TIME_DECREMENT = 2; 
+const SCORE_MILESTONE = 5; 
 
 export default function GamePage() {
   const [gameState, setGameState] = useState({
@@ -30,7 +30,7 @@ export default function GamePage() {
   const [inputValue, setInputValue] = useState('');
   const { toast } = useToast();
 
-  const availableLetters = useMemo(() => "ABCDEFGHIKMNOPQRSTUVW".split(''), []);
+  const availableLetters = useMemo(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''), []);
 
   const generateNewLetter = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * availableLetters.length);
@@ -42,9 +42,11 @@ export default function GamePage() {
   }, [generateNewLetter]);
   
   const handleGameOver = useCallback(async (score: number) => {
-    setGameState(prev => ({ ...prev, gameOver: true }));
+    setGameState(prev => ({ ...prev, gameOver: true, isSubmitting: false }));
     try {
-      await saveScore(score, username);
+      if (score > 0) {
+        await saveScore(score, username);
+      }
     } catch (error) {
       console.error("Failed to save score", error);
       toast({
@@ -73,7 +75,7 @@ export default function GamePage() {
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const placeName = inputValue.trim();
-    if (!placeName || gameState.isSubmitting) return;
+    if (!placeName || gameState.isSubmitting || gameState.gameOver) return;
 
     if (placeName.toUpperCase()[0] !== gameState.currentLetter) {
         toast({
@@ -84,7 +86,8 @@ export default function GamePage() {
         return;
     }
 
-    if (gameState.usedPlaces.has(placeName.toLowerCase())) {
+    const placeNameLower = placeName.toLowerCase();
+    if (gameState.usedPlaces.has(placeNameLower)) {
         toast({
             variant: "destructive",
             title: "Already Used!",
@@ -106,24 +109,29 @@ export default function GamePage() {
             });
             
             const newScore = gameState.score + 1;
-            const newTimeLimit = (newScore % SCORE_MILESTONE === 0 && gameState.timeLimit > 5)
+            const newTimeLimit = (newScore % SCORE_MILESTONE === 0 && gameState.timeLimit > 10)
                 ? gameState.timeLimit - TIME_DECREMENT
                 : gameState.timeLimit;
+            
+            const lastChar = placeName.slice(-1).toUpperCase();
+            // A simple check to ensure the last character is a letter.
+            const nextLetter = (lastChar >= 'A' && lastChar <= 'Z') ? lastChar : generateNewLetter();
 
             setGameState(prev => ({
                 ...prev,
                 score: newScore,
-                currentLetter: generateNewLetter(),
-                usedPlaces: new Set(prev.usedPlaces).add(placeName.toLowerCase()),
+                currentLetter: nextLetter,
+                usedPlaces: new Set(prev.usedPlaces).add(placeNameLower),
                 timeLeft: newTimeLimit,
                 timeLimit: newTimeLimit,
             }));
 
             setInputValue('');
         } else {
-            let description = "That doesn't seem to be a real place.";
+            handleGameOver(gameState.score); // End game on incorrect answer
+            let description = `"${placeName}" doesn't seem to be a real place.`;
             if (result.suggestedCorrection) {
-                description += ` Did you mean ${result.suggestedCorrection}?`;
+                description = `Did you mean ${result.suggestedCorrection}? Your streak ends here.`;
             }
             toast({
                 variant: "destructive",
@@ -138,8 +146,12 @@ export default function GamePage() {
             title: "Error",
             description: "Could not validate the place. Please try again.",
         });
+        setGameState(prev => ({...prev, isSubmitting: false}));
     } finally {
-        setGameState(prev => ({ ...prev, isSubmitting: false }));
+       // isSubmitting is handled in the logic branches
+       if (!gameState.gameOver) {
+         setGameState(prev => ({ ...prev, isSubmitting: false }));
+       }
     }
   };
 
@@ -195,6 +207,7 @@ export default function GamePage() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     disabled={gameState.isSubmitting}
+                    autoFocus
                 />
                 <Button type="submit" size="lg" className="h-12" disabled={gameState.isSubmitting}>
                     {gameState.isSubmitting ? 'Checking...' : 'Submit'}

@@ -1,3 +1,4 @@
+
 "use server";
 
 import {
@@ -12,6 +13,11 @@ import {
   addNewPlaceToDataset,
   type AddNewPlaceToDatasetOutput,
 } from "@/ai/flows/add-new-place-to-dataset";
+import {
+  validatePlaceName,
+  type ValidatePlaceNameInput,
+  type ValidatePlaceNameOutput,
+} from "@/ai/flows/validate-place-name";
 
 export interface ValidatePlaceInput {
   placeName: string;
@@ -26,7 +32,8 @@ export async function validatePlace(
   input: ValidatePlaceInput
 ): Promise<ValidatePlaceOutput> {
   const db = getFirestore(app);
-  const placeRef = doc(db, "places", input.placeName.toLowerCase());
+  const placeNameLower = input.placeName.toLowerCase();
+  const placeRef = doc(db, "places", placeNameLower);
 
   try {
     const placeSnap = await getDoc(placeRef);
@@ -34,28 +41,31 @@ export async function validatePlace(
     if (placeSnap.exists()) {
       return { isValid: true };
     } else {
-      // If not in our DB, validate with AI and maybe add it
-      const aiResult: AddNewPlaceToDatasetOutput = await addNewPlaceToDataset({
+      // If not in our DB, validate with AI. We use the more powerful flow here.
+      const aiResult = await validatePlaceName({
         placeName: input.placeName,
+        category: "Any",
       });
 
       if (aiResult.isValid) {
         // Add to our dataset for future checks
-        await setDoc(placeRef, { name: input.placeName.toLowerCase() });
+        await setDoc(placeRef, { name: placeNameLower });
         return { isValid: true };
       }
 
-      // The AI might still have a suggestion even if it's not valid
-      // in the context of adding it to the dataset.
-      // For now, we will just return the validity. A more complex implementation
-      // could be to use the `validatePlaceName` flow here as well.
-      return { isValid: false };
+      return {
+        isValid: false,
+        suggestedCorrection: aiResult.suggestedCorrection,
+      };
     }
   } catch (error) {
     console.error("Error validating place:", error);
     // Fallback to AI if Firestore check fails for some reason
     try {
-      const result = await addNewPlaceToDataset({ placeName: input.placeName });
+      const result = await validatePlaceName({
+        placeName: input.placeName,
+        category: "Any",
+      });
       return result;
     } catch (aiError) {
       console.error("Error validating place with AI:", aiError);
@@ -67,11 +77,15 @@ export async function validatePlace(
 export async function saveScore(score: number, user: string) {
   const db = getFirestore(app);
   // In a real app, user would be an ID.
-  const scoreRef = doc(collection(db, "scores"), user); 
-  await setDoc(scoreRef, {
-    name: user,
-    score: score,
-    country: "🇺🇳", // Placeholder country
-    createdAt: new Date(),
-  }, { merge: true });
+  const scoreRef = doc(collection(db, "scores"), user);
+  await setDoc(
+    scoreRef,
+    {
+      name: user,
+      score: score,
+      country: "🇺🇳", // Placeholder country
+      createdAt: new Date(),
+    },
+    { merge: true }
+  );
 }
