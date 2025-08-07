@@ -1,5 +1,4 @@
 
-import Header from "@/components/header";
 
 export default function AppLayout({
   children,
@@ -8,7 +7,6 @@ export default function AppLayout({
 }) {
   return (
     <>
-      <Header />
       <main>{children}</main>
     </>
   );

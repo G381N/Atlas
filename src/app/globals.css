@@ -30,6 +30,13 @@
     --input: 197 86% 90%;
     --ring: 197 86% 66%;
     --radius: 1.5rem;
+
+    /* Atlas Title Colors */
+    --atlas-red: #E54D4D;
+    --atlas-blue: #4A90E2;
+    --atlas-yellow: #F5A623;
+    --atlas-green: #50E3C2;
+
   }
 
   .dark {
@@ -64,7 +71,7 @@
     font-family: 'Poppins', sans-serif;
   }
   main {
-    padding-top: 64px; /* Add padding to offset fixed header */
+    padding-top: 0px; 
   }
   .font-title {
     font-family: 'Baloo 2', 'Poppins', sans-serif;
@@ -169,3 +176,30 @@
 .neon-glow-icon:hover {
     filter: drop-shadow(0 0 3px rgba(0, 191, 255, 0.8)) drop-shadow(0 0 8px rgba(0, 191, 255, 0.6));
 }
+
+/* Atlas Title and Game Buttons */
+.font-atlas {
+    font-family: 'Baloo 2', 'Poppins', sans-serif;
+    font-weight: 700;
+    -webkit-text-stroke: 4px white;
+    text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+}
+
+.text-atlas-red { color: var(--atlas-red); }
+.text-atlas-blue { color: var(--atlas-blue); }
+.text-atlas-yellow { color: var(--atlas-yellow); }
+.text-atlas-green { color: var(--atlas-green); }
+
+.btn-primary {
+  @apply bg-[#E54D4D] border-[#A73434] text-white hover:bg-[#C94040];
+}
+.btn-secondary {
+  @apply bg-[#50E3C2] border-[#38A88E] text-slate-800 hover:bg-[#45D1B1];
+}
+.btn-accent {
+  @apply bg-[#4A90E2] border-[#3469A6] text-white hover:bg-[#417EC7];
+}
+.btn-warning {
+  @apply bg-[#F5A623] border-[#B57C1A] text-white hover:bg-[#DFA020];
+}
+
