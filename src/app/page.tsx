@@ -3,11 +3,15 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown, Github, Instagram, Globe } from 'lucide-react';
 import FlightPaths from '@/components/flight-paths';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function Home() {
   return (
     <>
       <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden hero-background">
+        <div className="absolute top-4 right-4 z-10">
+          <ThemeToggle />
+        </div>
         <div className="absolute inset-0 bg-black/50 z-0"></div>
 
         {/* Animations */}
