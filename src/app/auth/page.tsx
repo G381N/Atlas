@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -61,14 +62,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4 relative">
-        <Button asChild variant="ghost" className="absolute top-4 left-4">
+    <div className="flex min-h-screen items-center justify-center p-4 relative hero-background">
+      <div className="absolute inset-0 bg-black/50 z-0"></div>
+        <Button asChild variant="ghost" size="icon" className="absolute top-4 left-4 z-10 text-white hover:bg-white/20">
             <Link href="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Home
+                <ArrowLeft className="h-6 w-6" />
+                <span className="sr-only">Back to Home</span>
             </Link>
         </Button>
-      <Card className="w-full max-w-sm mx-auto">
+      <Card className="w-full max-w-sm mx-auto bg-card/80 backdrop-blur-sm z-10">
         <CardHeader>
           <CardTitle className="text-2xl">{isLogin ? "Login" : "Sign Up"}</CardTitle>
           <CardDescription>
@@ -107,7 +109,7 @@ export default function AuthPage() {
                 <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+                <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
             </div>
           </div>
           <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
