@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { AlertCircle, CheckCircle, Clock, Star, Trophy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { validatePlace, saveScore } from '@/actions/game';
+import { validatePlaceName, type ValidatePlaceNameOutput } from "@/ai/flows/validate-place-name";
 import Link from 'next/link';
 
 const INITIAL_TIME = 60; // Increased time for more thoughtful answers
@@ -25,7 +25,6 @@ export default function GamePage() {
     gameOver: false,
     isSubmitting: false,
   });
-  const [username, setUsername] = useState("Explorer"); // In a real app, this would come from auth.
 
   const [inputValue, setInputValue] = useState('');
   const { toast } = useToast();
@@ -43,19 +42,7 @@ export default function GamePage() {
   
   const handleGameOver = useCallback(async (score: number) => {
     setGameState(prev => ({ ...prev, gameOver: true, isSubmitting: false }));
-    try {
-      if (score > 0) {
-        await saveScore(score, username);
-      }
-    } catch (error) {
-      console.error("Failed to save score", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Could not save your score. Please try again later.",
-      });
-    }
-  }, [username, toast]);
+  }, []);
 
   useEffect(() => {
     if (gameState.gameOver) return;
@@ -99,7 +86,7 @@ export default function GamePage() {
     setGameState(prev => ({ ...prev, isSubmitting: true }));
     
     try {
-        const result = await validatePlace({ placeName });
+        const result: ValidatePlaceNameOutput = await validatePlaceName({ placeName, category: "Any" });
 
         if (result.isValid) {
             toast({
@@ -148,7 +135,6 @@ export default function GamePage() {
         });
         setGameState(prev => ({...prev, isSubmitting: false}));
     } finally {
-       // isSubmitting is handled in the logic branches
        if (!gameState.gameOver) {
          setGameState(prev => ({ ...prev, isSubmitting: false }));
        }

@@ -33,7 +33,7 @@ export default function Home() {
             size="lg"
             className="mt-6 bg-red-600 hover:bg-red-700 text-white font-bold text-xl h-16 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 sparkle-button"
           >
-            <Link href="/auth">🎮 Start Game</Link>
+            <Link href="/dashboard">🎮 Start Game</Link>
           </Button>
         </div>
         
@@ -70,8 +70,7 @@ export default function Home() {
             <h3 className="font-futuristic text-lg font-bold text-white mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li><Link href="/how-to-play" className="hover:text-primary transition-colors">How to Play</Link></li>
-              <li><Link href="/leaderboard" className="hover:text-primary transition-colors">Leaderboard</Link></li>
-              <li><Link href="/auth" className="hover:text-primary transition-colors">Login / Sign Up</Link></li>
+              <li><Link href="/dashboard" className="hover:text-primary transition-colors">Play Game</Link></li>
             </ul>
           </div>
 
