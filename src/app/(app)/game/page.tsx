@@ -5,9 +5,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { AlertCircle, CheckCircle, Clock, Star, Trophy, MapPin, History } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Star, Trophy, MapPin, History, Timer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { validatePlace, saveScore } from '@/actions/game';
 import Link from 'next/link';
@@ -16,13 +14,98 @@ const INITIAL_TIME = 60; // Increased time for more thoughtful answers
 const TIME_DECREMENT = 2; 
 const SCORE_MILESTONE = 5; 
 
+// Timer component with circular design
+const CircularTimer = ({ timeLeft, timeLimit, isUrgent }: { timeLeft: number; timeLimit: number; isUrgent: boolean }) => {
+  const progress = (timeLeft / timeLimit) * 100;
+  const circumference = 2 * Math.PI * 45; // radius = 45
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  
+  return (
+    <div className={`relative w-28 h-28 ${isUrgent ? 'animate-pulse' : ''}`}>
+      <svg className="w-28 h-28 transform -rotate-90" viewBox="0 0 100 100">
+        {/* Background circle */}
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="currentColor"
+          strokeWidth="6"
+          fill="none"
+          className="text-muted-foreground/30"
+        />
+        {/* Progress circle */}
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="currentColor"
+          strokeWidth="6"
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          className={`transition-all duration-1000 ease-linear ${
+            isUrgent ? 'text-red-500' : timeLeft < 20 ? 'text-yellow-500' : 'text-green-500'
+          }`}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center">
+          <div className={`text-2xl font-bold ${isUrgent ? 'text-red-500' : 'text-foreground'}`}>
+            {timeLeft}
+          </div>
+          <div className="text-xs text-muted-foreground">seconds</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Previous places card component
+const PreviousPlacesCard = ({ usedPlaces }: { usedPlaces: string[] }) => {
+  const recentPlaces = usedPlaces.slice(-5).reverse(); // Show last 5 places
+  
+  return (
+    <Card className="w-full bg-card/80 backdrop-blur-sm border-2 border-primary/20">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <History className="h-5 w-5 text-primary" />
+          Previous Places
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {recentPlaces.length === 0 ? (
+          <p className="text-muted-foreground text-sm">No places entered yet</p>
+        ) : (
+          <div className="space-y-2">
+            {recentPlaces.map((place, index) => (
+              <div 
+                key={index} 
+                className="flex items-center gap-2 p-2 bg-primary/10 rounded-lg animate-in slide-in-from-top-2 duration-300"
+              >
+                <MapPin className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium capitalize">{place}</span>
+                {index === 0 && (
+                  <span className="text-xs bg-green-500/20 text-green-700 dark:text-green-300 px-2 py-1 rounded-full ml-auto">
+                    Latest
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}; 
+
 export default function GamePage() {
   const [gameState, setGameState] = useState({
     score: 0,
     currentLetter: '',
     timeLeft: INITIAL_TIME,
     timeLimit: INITIAL_TIME,
-    usedPlaces: [] as string[], // Changed to array to maintain order
+    usedPlaces: [] as string[], // Changed from Set to array for easier display
     gameOver: false,
     isSubmitting: false,
   });
@@ -30,6 +113,14 @@ export default function GamePage() {
 
   const [inputValue, setInputValue] = useState('');
   const { toast } = useToast();
+
+  const availableLetters = useMemo(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''), []);
+
+  // Check if it's urgent time (last 10 seconds)
+  const isUrgent = gameState.timeLeft <= 10 && gameState.timeLeft > 0;
+  
+  // Calculate red filter intensity based on time left
+  const redFilterIntensity = Math.max(0, (20 - gameState.timeLeft) / 20); // Starts at 20 seconds
 
   const availableLetters = useMemo(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''), []);
 
@@ -156,255 +247,201 @@ export default function GamePage() {
     }
   };
 
-  // Calculate urgency level for visual effects
-  const timePercentage = (gameState.timeLeft / gameState.timeLimit) * 100;
-  const isUrgent = gameState.timeLeft <= 10;
-  const isCritical = gameState.timeLeft <= 5;
-
   if (gameState.gameOver) {
     return (
-      <div className="relative min-h-screen w-full flex flex-col items-center justify-center p-4 hero-background">
-        <div className="absolute inset-0 bg-black/30 z-0"></div>
-        <Card className="relative z-10 w-full max-w-md text-center bg-card/90 backdrop-blur-sm border-2 border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Game Over!</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="relative">
-              <Trophy className="mx-auto h-24 w-24 text-accent animate-bounce" />
-              <div className="absolute inset-0 bg-accent/20 rounded-full blur-xl"></div>
-            </div>
-            <p className="text-xl text-muted-foreground">Your final score:</p>
-            <p className="text-6xl font-bold text-primary animate-pulse">{gameState.score}</p>
-            {gameState.usedPlaces.length > 0 && (
-              <div className="text-left">
-                <p className="text-sm text-muted-foreground mb-2">Places you conquered:</p>
-                <div className="flex flex-wrap gap-1 max-h-20 overflow-y-auto">
-                  {gameState.usedPlaces.slice(-10).map((place, index) => (
-                    <Badge key={index} variant="secondary" className="text-xs capitalize">
-                      {place}
-                    </Badge>
-                  ))}
+      <div className="min-h-screen w-full hero-background relative">
+        <div 
+          className="absolute inset-0 bg-black/30 z-0"
+        ></div>
+        <div className="relative z-10 container flex items-center justify-center min-h-screen p-4">
+          <Card className="w-full max-w-md text-center bg-card/90 backdrop-blur-sm border-2 border-primary/30 shadow-2xl">
+            <CardHeader>
+              <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Game Over!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="relative">
+                <Trophy className="mx-auto h-24 w-24 text-accent animate-bounce" />
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <Star className="h-4 w-4 text-yellow-700" />
                 </div>
               </div>
-            )}
-            <div className="flex gap-4">
-              <Button size="lg" className="w-full sparkle-button" onClick={() => window.location.reload()}>
-                Play Again
-              </Button>
-              <Button asChild size="lg" variant="secondary" className="w-full">
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="space-y-2">
+                <p className="text-xl text-muted-foreground">Your final score is:</p>
+                <p className="text-6xl font-bold text-primary animate-pulse">{gameState.score}</p>
+                <p className="text-sm text-muted-foreground">
+                  Places discovered: {gameState.usedPlaces.length}
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <Button 
+                  size="lg" 
+                  className="w-full btn-primary animate-in slide-in-from-left-4 duration-500" 
+                  onClick={() => window.location.reload()}
+                >
+                  Play Again
+                </Button>
+                <Button 
+                  asChild 
+                  size="lg" 
+                  variant="secondary" 
+                  className="w-full btn-secondary animate-in slide-in-from-right-4 duration-500"
+                >
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
 
+  const progress = (gameState.timeLeft / gameState.timeLimit) * 100;
+
   return (
-    <div className={`relative min-h-screen w-full flex gap-6 p-4 hero-background transition-all duration-500 ${
-      isUrgent ? 'animate-pulse' : ''
-    }`}>
-      {/* Red overlay for urgency */}
-      <div className={`absolute inset-0 transition-all duration-1000 z-0 ${
-        isCritical 
-          ? 'bg-red-500/50' 
-          : isUrgent 
-            ? 'bg-red-500/20' 
-            : timePercentage < 50 
-              ? 'bg-red-500/10' 
-              : 'bg-black/30'
-      } ${isUrgent ? 'animate-pulse' : ''}`}></div>
-
-      {/* Previous Places Card */}
-      <Card className={`relative z-10 w-80 bg-card/90 backdrop-blur-sm border-2 transition-all duration-300 ${
-        isUrgent ? 'border-red-400/50 shadow-red-400/25' : 'border-primary/20'
-      }`}>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <History className="h-5 w-5 text-accent" />
-            Previous Places
-            <Badge variant="secondary" className="ml-auto">{gameState.usedPlaces.length}</Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[calc(100vh-200px)]">
-            {gameState.usedPlaces.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
-                <MapPin className="h-12 w-12 mb-2 opacity-50" />
-                <p className="text-sm text-center">No places entered yet.<br />Start exploring!</p>
+    <div className="min-h-screen w-full hero-background relative">
+      {/* Red overlay that intensifies as time runs out */}
+      <div 
+        className="absolute inset-0 bg-red-500 transition-all duration-1000 z-0"
+        style={{ 
+          opacity: redFilterIntensity * 0.3,
+          mixBlendMode: 'multiply'
+        }}
+      ></div>
+      <div className="absolute inset-0 bg-black/30 z-0"></div>
+      
+      {/* Blinking red overlay for urgent state */}
+      {isUrgent && (
+        <div className="absolute inset-0 bg-red-500/20 animate-pulse z-0"></div>
+      )}
+      
+      <div className="relative z-10 container mx-auto p-4 min-h-screen">
+        {/* Top Stats Bar */}
+        <div className="flex justify-between items-center mb-6 pt-4">
+          <Card className="bg-card/90 backdrop-blur-sm border-2 border-primary/20">
+            <CardContent className="p-4 flex items-center gap-3">
+              <Star className="h-8 w-8 text-yellow-500" />
+              <div>
+                <p className="text-sm text-muted-foreground">Score</p>
+                <p className="text-2xl font-bold text-primary">{gameState.score}</p>
               </div>
-            ) : (
-              <div className="space-y-2">
-                {gameState.usedPlaces.map((place, index) => (
-                  <div 
-                    key={index} 
-                    className={`flex items-center gap-3 p-3 rounded-lg bg-background/50 border transition-all duration-300 ${
-                      index === gameState.usedPlaces.length - 1 
-                        ? 'border-primary bg-primary/10 animate-in slide-in-from-left-1' 
-                        : 'border-border/50'
-                    }`}
-                  >
-                    <div className="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-bold text-primary">{index + 1}</span>
-                    </div>
-                    <div className="flex-grow">
-                      <p className="capitalize font-medium text-sm">{place}</p>
-                      <p className="text-xs text-muted-foreground">Starting with {place.charAt(0).toUpperCase()}</p>
-                    </div>
-                    <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                  </div>
-                ))}
-              </div>
-            )}
-          </ScrollArea>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-card/90 backdrop-blur-sm border-2 border-primary/20">
+            <CardContent className="p-4 flex items-center gap-3">
+              <CircularTimer 
+                timeLeft={gameState.timeLeft} 
+                timeLimit={gameState.timeLimit}
+                isUrgent={isUrgent}
+              />
+            </CardContent>
+          </Card>
+        </div>
 
-      {/* Main Game Area */}
-      <div className="flex-1 flex items-center justify-center">
-        <Card className={`relative z-10 w-full max-w-2xl bg-card/90 backdrop-blur-sm border-2 transition-all duration-300 ${
-          isUrgent ? 'border-red-400/50 shadow-xl shadow-red-400/25' : 'border-primary/20'
-        }`}>
-          <CardHeader className="text-center">
-            {/* Clock Timer */}
-            <div className="flex justify-center mb-4">
-              <div className={`relative w-32 h-32 rounded-full border-8 flex items-center justify-center transition-all duration-300 ${
-                isCritical 
-                  ? 'border-red-500 bg-red-500/20 animate-bounce' 
-                  : isUrgent 
-                    ? 'border-orange-500 bg-orange-500/20' 
-                    : timePercentage < 50 
-                      ? 'border-yellow-500 bg-yellow-500/10' 
-                      : 'border-primary bg-primary/10'
-              }`}>
-                <div className="absolute inset-2 rounded-full border-4 border-background"></div>
-                <div className="text-center">
-                  <Clock className={`h-6 w-6 mx-auto mb-1 ${
-                    isUrgent ? 'text-red-500 animate-spin' : 'text-primary'
-                  }`} />
-                  <div className={`text-2xl font-bold font-mono ${
-                    isCritical ? 'text-red-500 animate-pulse' : isUrgent ? 'text-orange-500' : 'text-foreground'
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Left Column - Previous Places */}
+          <div className="md:col-span-1">
+            <PreviousPlacesCard usedPlaces={gameState.usedPlaces} />
+          </div>
+
+          {/* Center Column - Main Game */}
+          <div className="md:col-span-2">
+            <Card className={`w-full bg-card/90 backdrop-blur-sm border-2 transition-all duration-300 shadow-2xl ${
+              isUrgent ? 'border-red-500 shadow-red-500/20' : 'border-primary/30'
+            }`}>
+              <CardHeader className="text-center pb-4">
+                <CardTitle className={`text-2xl font-bold transition-colors duration-300 ${
+                  isUrgent ? 'text-red-500' : 'text-foreground'
+                }`}>
+                  {isUrgent ? '⚡ HURRY UP! ⚡' : 'Geography Challenge'}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center space-y-8 py-8">
+                <div className="space-y-4">
+                  <p className="text-xl text-muted-foreground animate-in slide-in-from-top-2 duration-500">
+                    Enter a place starting with the letter:
+                  </p>
+                  
+                  {/* Letter Display */}
+                  <div className={`mx-auto w-32 h-32 rounded-full flex items-center justify-center relative transition-all duration-300 ${
+                    isUrgent 
+                      ? 'bg-red-500/20 shadow-lg shadow-red-500/30 animate-pulse' 
+                      : 'bg-primary/20 shadow-lg shadow-primary/30'
                   }`}>
-                    {String(Math.floor(gameState.timeLeft / 60)).padStart(2, '0')}:
-                    {String(gameState.timeLeft % 60).padStart(2, '0')}
+                    <span className={`text-7xl font-bold transition-colors duration-300 ${
+                      isUrgent ? 'text-red-500' : 'text-primary'
+                    }`}>
+                      {gameState.currentLetter}
+                    </span>
+                    
+                    {/* Animated ring around letter */}
+                    <div className={`absolute inset-0 rounded-full border-4 transition-all duration-300 ${
+                      isUrgent 
+                        ? 'border-red-500 animate-spin' 
+                        : 'border-primary/50'
+                    }`}></div>
                   </div>
+
+                  {/* Streak indicator */}
+                  {gameState.score > 0 && (
+                    <div className="flex justify-center">
+                      <div className="bg-green-500/20 text-green-700 dark:text-green-300 px-4 py-2 rounded-full animate-in slide-in-from-bottom-2 duration-500">
+                        <span className="text-sm font-medium">
+                          🔥 {gameState.score} place{gameState.score > 1 ? 's' : ''} streak!
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
-                {/* Circular progress */}
-                <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 128 128">
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    className="text-background"
-                  />
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    fill="none"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    className={`transition-all duration-300 ${
-                      isCritical ? 'stroke-red-500' : isUrgent ? 'stroke-orange-500' : 'stroke-primary'
+                {/* Input Form */}
+                <form onSubmit={handleSubmission} className="flex w-full max-w-lg mx-auto items-center space-x-4 animate-in slide-in-from-bottom-4 duration-700">
+                  <Input 
+                    type="text" 
+                    placeholder="e.g., Paris, Tokyo, New York..."
+                    className={`text-lg h-14 transition-all duration-300 ${
+                      isUrgent 
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' 
+                        : 'border-primary/50 focus:border-primary'
                     }`}
-                    strokeDasharray={`${2 * Math.PI * 56}`}
-                    strokeDashoffset={`${2 * Math.PI * 56 * (1 - timePercentage / 100)}`}
-                    style={{ transition: 'stroke-dashoffset 1s linear' }}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    disabled={gameState.isSubmitting}
+                    autoFocus
                   />
-                </svg>
-              </div>
-            </div>
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className={`h-14 px-8 transition-all duration-300 ${
+                      isUrgent 
+                        ? 'bg-red-500 hover:bg-red-600 border-red-600' 
+                        : 'btn-primary'
+                    }`}
+                    disabled={gameState.isSubmitting}
+                  >
+                    {gameState.isSubmitting ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Checking...
+                      </div>
+                    ) : (
+                      'Submit'
+                    )}
+                  </Button>
+                </form>
 
-            {/* Score Display */}
-            <div className="flex justify-center items-center gap-4 mb-4">
-              <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 rounded-full">
-                <Star className="h-5 w-5 text-primary animate-spin" style={{ animationDuration: '3s' }} />
-                <span className="text-2xl font-bold text-primary">{gameState.score}</span>
-                <span className="text-sm text-muted-foreground">points</span>
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="text-center space-y-8 py-8">
-            <div className="space-y-4">
-              <p className={`text-xl transition-all duration-300 ${
-                isUrgent ? 'text-red-500 animate-pulse' : 'text-muted-foreground'
-              }`}>
-                Name a place starting with:
-              </p>
-              
-              {/* Letter Display */}
-              <div className={`mx-auto w-32 h-32 rounded-full flex items-center justify-center transition-all duration-500 ${
-                isCritical 
-                  ? 'bg-red-500/30 border-4 border-red-500 animate-bounce' 
-                  : isUrgent 
-                    ? 'bg-orange-500/30 border-4 border-orange-500 animate-pulse' 
-                    : 'bg-primary/20 border-4 border-primary'
-              }`}>
-                <span className={`text-6xl font-bold transition-all duration-300 ${
-                  isCritical ? 'text-red-500 animate-pulse' : isUrgent ? 'text-orange-500' : 'text-primary'
-                }`}>
-                  {gameState.currentLetter}
-                </span>
-              </div>
-              
-              {isUrgent && (
-                <p className="text-sm text-red-500 animate-bounce font-semibold">
-                  ⚡ Hurry up! Time is running out! ⚡
-                </p>
-              )}
-            </div>
-
-            {/* Input Form */}
-            <form onSubmit={handleSubmission} className="flex w-full max-w-md mx-auto items-center space-x-2">
-              <Input 
-                type="text" 
-                placeholder="e.g., Paris, London, Tokyo..."
-                className={`text-lg h-14 transition-all duration-300 ${
-                  isUrgent ? 'border-red-400 focus:border-red-500 focus:ring-red-500' : ''
-                }`}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                disabled={gameState.isSubmitting}
-                autoFocus
-              />
-              <Button 
-                type="submit" 
-                size="lg" 
-                className={`h-14 px-6 transition-all duration-300 ${
-                  isUrgent 
-                    ? 'bg-red-500 hover:bg-red-600 border-red-600 animate-pulse' 
-                    : 'sparkle-button'
-                }`} 
-                disabled={gameState.isSubmitting}
-              >
-                {gameState.isSubmitting ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                    Checking...
-                  </div>
-                ) : (
-                  'Submit'
-                )}
-              </Button>
-            </form>
-
-            {/* Helpful hints */}
-            <div className="text-sm text-muted-foreground space-y-1">
-              <p>💡 <strong>Tip:</strong> Try cities, countries, landmarks, or any real place!</p>
-              {gameState.score > 0 && (
-                <p>🎯 <strong>Streak:</strong> {gameState.score} correct answer{gameState.score !== 1 ? 's' : ''}!</p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+                {/* Game hints */}
+                <div className="text-sm text-muted-foreground space-y-1 animate-in slide-in-from-bottom-6 duration-1000">
+                  <p>💡 Think of cities, towns, landmarks, or any geographical location!</p>
+                  <p>🌍 The more unique, the better your chances!</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
