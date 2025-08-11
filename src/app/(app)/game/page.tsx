@@ -122,8 +122,6 @@ export default function GamePage() {
   // Calculate red filter intensity based on time left
   const redFilterIntensity = Math.max(0, (20 - gameState.timeLeft) / 20); // Starts at 20 seconds
 
-  const availableLetters = useMemo(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''), []);
-
   const generateNewLetter = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * availableLetters.length);
     return availableLetters[randomIndex];
